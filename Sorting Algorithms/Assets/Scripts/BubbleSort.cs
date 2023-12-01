@@ -66,6 +66,7 @@ public class BubbleSort : MonoBehaviour
         done = false;
         time = 0;
         arr = new int[range];
+        array = null;
         return;
     }
 }
