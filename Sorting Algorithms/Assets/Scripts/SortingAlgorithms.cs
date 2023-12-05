@@ -1,5 +1,7 @@
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
+using System;
 public class SortingAlgorithms : MonoBehaviour
 {
     [Header("Settings")]
@@ -7,12 +9,28 @@ public class SortingAlgorithms : MonoBehaviour
     [SerializeField] int minValue = 1;
     [SerializeField] int range = 10;
 
-    [Header("List")]
-    [SerializeField] int[] unsorted;
-    [SerializeField] int[] sorted;
+    //Timer
+    public TextMeshProUGUI currentTimeText;
+    float currentTime;
+    bool timerActive;
 
     int[] arr;
     string arrayText;
+
+    void Start()
+    {
+        currentTime = 0;
+    }
+
+    void Update()
+    {
+        if(timerActive)
+        {
+            currentTime += Time.deltaTime;
+        }
+        TimeSpan time = TimeSpan.FromSeconds(currentTime); //Calmps digits 
+        currentTimeText.text = time.Minutes + ":" + time.Seconds + ":" + time.Milliseconds;
+    }
 
     public void BubbleSort()
     {
@@ -34,7 +52,7 @@ public class SortingAlgorithms : MonoBehaviour
             arrayText += ", " + arr[i].ToString();
        }
        print("Sorted array : " + arrayText);
-       sorted = arr;
+       timerActive = false;
     } 
 
     public void SelectionSort()
@@ -59,7 +77,7 @@ public class SortingAlgorithms : MonoBehaviour
             arrayText += ", " + arr[i].ToString();
        }
        print("Sorted array : " + arrayText);
-       sorted = arr;
+       timerActive = false;
     }
 
     public void QuickSortButton()
@@ -67,6 +85,7 @@ public class SortingAlgorithms : MonoBehaviour
         Reset();
         Quicksort(arr, 0, range - 1);
         print("Sorted array : " + arrayText);
+        timerActive = false;
     }
     void Quicksort(int[] array, int left, int right)
 {
@@ -113,17 +132,16 @@ public class SortingAlgorithms : MonoBehaviour
     {
         arr = new int[range];
         arrayText = null;
+        timerActive = true;
 
         for(int i = 0; i < range; i++) //Apply random arr in the array in random amount
         {
-            arr[i] = Random.Range(minValue, maxValue);
+            arr[i] = UnityEngine.Random.Range(minValue, maxValue);
             arrayText += ", " + arr[i].ToString(); //Puts text in the same line
         }
 
         print("Unsorted array : " + arrayText);
         arrayText = null;
-        unsorted = arr;
-
         return;
     }
 }
