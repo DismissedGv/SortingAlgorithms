@@ -17,19 +17,14 @@ public class SortingAlgorithms : MonoBehaviour
     int[] arr;
     string arrayText;
 
-    void Start()
-    {
-        currentTime = 0;
-    }
-
     void Update()
     {
         if(timerActive)
         {
             currentTime += Time.deltaTime;
         }
-        TimeSpan time = TimeSpan.FromSeconds(currentTime); //Calmps digits 
-        currentTimeText.text = time.Minutes + ":" + time.Seconds + ":" + time.Milliseconds;
+        
+        currentTimeText.text = currentTime.ToString();
     }
 
     public void BubbleSort()
@@ -51,7 +46,7 @@ public class SortingAlgorithms : MonoBehaviour
             }
             arrayText += ", " + arr[i].ToString();
        }
-       print("Sorted array : " + arrayText);
+       print("Bubble sorted array : " + arrayText);
        timerActive = false;
     } 
 
@@ -76,7 +71,7 @@ public class SortingAlgorithms : MonoBehaviour
 
             arrayText += ", " + arr[i].ToString();
        }
-       print("Sorted array : " + arrayText);
+       print("Selection sorted array : " + arrayText);
        timerActive = false;
     }
 
@@ -84,8 +79,12 @@ public class SortingAlgorithms : MonoBehaviour
     {
         Reset();
         Quicksort(arr, 0, range - 1);
-        print("Sorted array : " + arrayText);
         timerActive = false;
+        for(int i = 0; i < arr.Length; i++)
+        {
+            arrayText += ", " + arr[i].ToString();
+        }
+        print("Quick sorted array : " + arrayText);
     }
     void Quicksort(int[] array, int left, int right)
 {
@@ -110,7 +109,6 @@ public class SortingAlgorithms : MonoBehaviour
             var tmp = array[i];
             array[i] = array[j];
             array[j] = tmp;
-            arrayText += ", " + array[i].ToString();
 
             i++;
             j--;
@@ -133,6 +131,7 @@ public class SortingAlgorithms : MonoBehaviour
         arr = new int[range];
         arrayText = null;
         timerActive = true;
+        currentTime = 0;
 
         for(int i = 0; i < range; i++) //Apply random arr in the array in random amount
         {
