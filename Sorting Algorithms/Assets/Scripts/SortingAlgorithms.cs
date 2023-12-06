@@ -5,8 +5,6 @@ using System;
 public class SortingAlgorithms : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] int maxValue = 100;
-    [SerializeField] int minValue = 1;
     [SerializeField] int range = 10;
 
     //Timer
@@ -135,7 +133,7 @@ public class SortingAlgorithms : MonoBehaviour
 
         for(int i = 0; i < range; i++) //Apply random arr in the array in random amount
         {
-            arr[i] = UnityEngine.Random.Range(minValue, maxValue);
+            arr[i] = UnityEngine.Random.Range(1, 10000);
             arrayText += ", " + arr[i].ToString(); //Puts text in the same line
         }
 
