@@ -80,41 +80,41 @@ public class SortingAlgorithms : MonoBehaviour
         temp = currentTime;
     }
     void Quicksort(int[] array, int left, int right)
-{
-    int i = left;
-    int j = right;
-    int pivot = array[(left + right) / 2];
-
-    while(i <= j)
     {
-        while (array[i] < pivot)
+        int i = left;
+        int j = right;
+        int pivot = array[(left + right) / 2];
+        
+        while(i <= j)
         {
-            i++;
+            while (array[i] < pivot)
+            {
+                i++;
+            }
+
+            while (array[j] > pivot)
+            {
+                j--;
+            }
+
+            if(i <= j)
+            {
+                (arr[i], arr[j]) = (arr[j], arr[i]);
+                i++;
+                j--;
+            }
         }
 
-        while (array[j] > pivot)
+        if (left < j)
         {
-            j--;
+            Quicksort(array, left, j);
         }
 
-        if(i <= j)
+        if (i < right)
         {
-            (arr[i], arr[j]) = (arr[j], arr[i]);
-            i++;
-            j--;
+            Quicksort(array, i, right);
         }
     }
-
-    if (left < j)
-    {
-        Quicksort(array, left, j);
-    }
-
-    if (i < right)
-    {
-        Quicksort(array, i, right);
-    }
-}
 
     void Reset()
     {
