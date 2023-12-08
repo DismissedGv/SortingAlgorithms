@@ -2,54 +2,47 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
+
 public class SortingAlgorithms : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] int range = 10;
 
     //Timer
-    public TextMeshProUGUI currentTimeText;
+    float startTime;
     float currentTime;
-    bool timerActive;
-
     int[] arr;
     string arrayText;
 
-    void Update()
+    void Start()
     {
-        if(timerActive)
-        {
-            currentTime += Time.deltaTime;
-        }
-        
-        currentTimeText.text = currentTime.ToString();
+        startTime = Time.realtimeSinceStartup;
     }
 
     public void BubbleSort()
-    {
+    {   
+        startTime = Time.realtimeSinceStartup;
         Reset();
 
        
-       for(int i = 0; i < range; i++) //Where the magic happens(Bubble sort)
+       for(int i = 0; i < range; i++) //Where the magic happens
        {
             for (int j = i+1; j < range; j++)
             {
                 if (arr[j] < arr[i])
                 {
-                    //Swaping
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
+                    (arr[i], arr[j]) = (arr[j], arr[i]);
                 }
             }
             arrayText += ", " + arr[i].ToString();
        }
-       print("Bubble sorted array : " + arrayText);
-       timerActive = false;
+       currentTime = Time.realtimeSinceStartup - startTime;
+       print("Bubble sorted runtime: " + (currentTime * 1000f) + "ms " + "array : " + arrayText);
     } 
 
     public void SelectionSort()
     {
+        startTime = Time.realtimeSinceStartup;
         Reset();
 
         for(int i = 0; i < range; i++)
@@ -62,27 +55,26 @@ public class SortingAlgorithms : MonoBehaviour
                     min = j;
                 }
             }
-            //Swaping
-            int temp = arr[i];
-            arr[i] = arr[min];
-            arr[min] = temp;
+           
+            (arr[i], arr[min]) = (arr[min], arr[i]);
 
             arrayText += ", " + arr[i].ToString();
        }
-       print("Selection sorted array : " + arrayText);
-       timerActive = false;
+       currentTime = Time.realtimeSinceStartup - startTime;
+       print("Bubble sorted runtime: " + (currentTime * 1000f) + "ms " + "array : " + arrayText);
     }
 
     public void QuickSortButton()
     {
+        startTime = Time.realtimeSinceStartup;
         Reset();
         Quicksort(arr, 0, range - 1);
-        timerActive = false;
         for(int i = 0; i < arr.Length; i++)
         {
             arrayText += ", " + arr[i].ToString();
         }
-        print("Quick sorted array : " + arrayText);
+        currentTime = Time.realtimeSinceStartup - startTime;
+       print("Bubble sorted runtime: " + (currentTime * 1000f) + "ms " + "array : " + arrayText);
     }
     void Quicksort(int[] array, int left, int right)
 {
@@ -104,10 +96,7 @@ public class SortingAlgorithms : MonoBehaviour
 
         if(i <= j)
         {
-            var tmp = array[i];
-            array[i] = array[j];
-            array[j] = tmp;
-
+            (arr[i], arr[j]) = (arr[j], arr[i]);
             i++;
             j--;
         }
@@ -128,13 +117,10 @@ public class SortingAlgorithms : MonoBehaviour
     {
         arr = new int[range];
         arrayText = null;
-        timerActive = true;
-        currentTime = 0;
-
-        for(int i = 0; i < range; i++) //Apply random arr in the array in random amount
+        for(int i = 0; i < range; i++)
         {
-            arr[i] = UnityEngine.Random.Range(1, 10000);
-            arrayText += ", " + arr[i].ToString(); //Puts text in the same line
+            arr[i] = UnityEngine.Random.Range(1, range);
+            arrayText += ", " + arr[i].ToString(); //Putting the text in the same line
         }
 
         print("Unsorted array : " + arrayText);
