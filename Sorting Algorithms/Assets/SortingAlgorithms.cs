@@ -13,6 +13,7 @@ public class SortingAlgorithms : MonoBehaviour
     float currentTime;
     int[] arr;
     string arrayText;
+    public float temp;
 
     void Start()
     {
@@ -21,29 +22,30 @@ public class SortingAlgorithms : MonoBehaviour
 
     public void BubbleSort()
     {   
-        startTime = Time.realtimeSinceStartup;
         Reset();
-
-       
-       for(int i = 0; i < range; i++) //Where the magic happens
+        startTime = Time.realtimeSinceStartup;
+               
+       for(int i = 0; i < range - 1; i++) //Where the magic happens
        {
-            for (int j = i+1; j < range; j++)
+            for (int j = 0; j < range - i - 1; j++)
             {
-                if (arr[j] < arr[i])
+                if (arr[j] > arr[j + 1])
                 {
-                    (arr[i], arr[j]) = (arr[j], arr[i]);
+                    (arr[j + 1], arr[j]) = (arr[j], arr[j + 1]);
                 }
             }
-            arrayText += ", " + arr[i].ToString();
        }
        currentTime = Time.realtimeSinceStartup - startTime;
+
+       for(int i = 0; i < range; i++) { arrayText += ", " + arr[i].ToString(); }
        print("Bubble sorted runtime: " + (currentTime * 1000f) + "ms " + "array : " + arrayText);
+       temp = currentTime;
     } 
 
     public void SelectionSort()
     {
-        startTime = Time.realtimeSinceStartup;
         Reset();
+        startTime = Time.realtimeSinceStartup;
 
         for(int i = 0; i < range; i++)
        {
@@ -57,24 +59,25 @@ public class SortingAlgorithms : MonoBehaviour
             }
            
             (arr[i], arr[min]) = (arr[min], arr[i]);
-
-            arrayText += ", " + arr[i].ToString();
        }
        currentTime = Time.realtimeSinceStartup - startTime;
+       
+       for(int i = 0; i < range; i++) { arrayText += ", " + arr[i].ToString(); }
        print("Bubble sorted runtime: " + (currentTime * 1000f) + "ms " + "array : " + arrayText);
+       temp = currentTime;
     }
 
     public void QuickSortButton()
     {
-        startTime = Time.realtimeSinceStartup;
         Reset();
+        startTime = Time.realtimeSinceStartup;
         Quicksort(arr, 0, range - 1);
-        for(int i = 0; i < arr.Length; i++)
-        {
-            arrayText += ", " + arr[i].ToString();
-        }
+        
         currentTime = Time.realtimeSinceStartup - startTime;
-       print("Bubble sorted runtime: " + (currentTime * 1000f) + "ms " + "array : " + arrayText);
+
+        for(int i = 0; i < range; i++) { arrayText += ", " + arr[i].ToString(); }
+        print("Bubble sorted runtime: " + (currentTime * 1000f) + "ms " + "array : " + arrayText);
+        temp = currentTime;
     }
     void Quicksort(int[] array, int left, int right)
 {
